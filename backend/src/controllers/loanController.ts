@@ -27,7 +27,7 @@ export const approveAndCreateLoan = async (req: Request, res: Response, next: Ne
     // Approve the application
     await prisma.application.update({
       where: { id: appId },
-      data: { status: "APPROVED", approvedBy: { connect: { id: adminId } } }
+      data: { status: "APPROVED", approvedBy: { connect: { id: adminId } } },
     });
 
     // Loan EMI Calculation with interest
@@ -35,18 +35,18 @@ export const approveAndCreateLoan = async (req: Request, res: Response, next: Ne
     const tenureMonths = application.tenure;
     const principal = application.amount;
     const monthlyRate = annualInterestRate / 12 / 100;
-
     const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) / (Math.pow(1 + monthlyRate, tenureMonths) - 1);
 
     // Create Loan Record
     const loan = await prisma.loan.create({
       data: {
         applicationId: appId,
+        userId: application.userId, // Fetch userId from application and pass it to loan
         interestRate: annualInterestRate,
         principalLeft: principal,
         tenureMonths,
-        emi
-      }
+        emi,
+      },
     });
 
     res.status(201).json({ message: "Loan Approved & Created", loan });

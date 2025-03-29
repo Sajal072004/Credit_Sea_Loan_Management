@@ -12,10 +12,12 @@ router.post("/approve/:appId", authMiddleware, roleMiddleware("ADMIN"), asyncHan
 // User makes EMI payment
 router.post("/pay/:loanId", authMiddleware, roleMiddleware("USER"), asyncHandler(makeEMIPayment));
 
+router.get("/user", authMiddleware, roleMiddleware("USER"), asyncHandler(getUserLoans));
+
 // Get Loan Details
 router.get("/:loanId", authMiddleware, asyncHandler(getLoanDetails));
 
-router.get("/user", authMiddleware, roleMiddleware("USER"), asyncHandler(getUserLoans));
+
 
 
 export default router;
