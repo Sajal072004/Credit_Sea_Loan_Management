@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth";
 import applicationRoutes from "./routes/applicationRoutes";
 
 import verifierRoutes from "./routes/verifierRoutes";
+import adminRoutes from "./routes/adminRoutes";
 
 
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/verifier", verifierRoutes);
+app.use("/api/admin", adminRoutes);
 
 
 // Root Route

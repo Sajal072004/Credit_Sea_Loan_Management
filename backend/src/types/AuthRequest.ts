@@ -3,6 +3,6 @@ import { Request } from "express";
 export interface AuthRequest extends Request {
   user?: {
     userId: string;
-    role: "USER" | "ADMIN" | "VERIFIER";
+    role: "SUPER_ADMIN" | "USER" | "ADMIN" | "VERIFIER";
   };
 }
