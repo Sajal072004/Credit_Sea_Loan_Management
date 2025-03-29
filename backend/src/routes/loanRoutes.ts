@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import { approveAndCreateLoan, makeEMIPayment, getLoanDetails } from "../controllers/loanController";
+import { approveAndCreateLoan, makeEMIPayment, getLoanDetails, getUserLoans } from "../controllers/loanController";
 import authMiddleware from "../middleware/authMiddleware";
 import roleMiddleware from "../middleware/roleMiddleware";
 
@@ -14,5 +14,8 @@ router.post("/pay/:loanId", authMiddleware, roleMiddleware("USER"), asyncHandler
 
 // Get Loan Details
 router.get("/:loanId", authMiddleware, asyncHandler(getLoanDetails));
+
+router.get("/user", authMiddleware, roleMiddleware("USER"), asyncHandler(getUserLoans));
+
 
 export default router;

@@ -125,3 +125,43 @@ export const getLoanDetails = async (req: Request, res: Response, next: NextFunc
     next(error);
   }
 };
+
+
+export const getUserLoans = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    console.log("🔹 getUserLoans API called");
+
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.userId;
+
+    console.log("🔹 Extracted userId:", userId);
+
+    if (!userId) {
+      console.log("❌ Unauthorized request: User ID missing");
+      res.status(401).json({ message: "Unauthorized: User ID missing" });
+      return;
+    }
+
+    // ✅ Fetch loans directly using userId
+    const loans = await prisma.loan.findMany({
+      where: { userId },
+      include: {
+        transactions: true, // Include EMI transactions
+        application: true, // Include application details
+      },
+    });
+
+    console.log("🔹 Loans fetched successfully:", loans);
+
+    if (loans.length === 0) {
+      console.log("❌ No loans found for this user");
+      res.status(404).json({ message: "No loans found for this user" });
+      return;
+    }
+
+    res.status(200).json({ message: "User loans fetched successfully", loans });
+  } catch (error) {
+    console.error("❌ Error fetching user loans:", error);
+    next(error);
+  }
+};
