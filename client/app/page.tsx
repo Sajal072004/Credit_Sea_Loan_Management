@@ -41,7 +41,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-20 px-6 grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
         {["Fast Approvals", "Secure Transactions", "Easy Tracking"].map((title, index) => (
-          <Card key={index} className="shadow-xl hover:shadow-2xl bg-opacity-90 backdrop-blur-md">
+          <Card key={title} className="shadow-xl hover:shadow-2xl bg-opacity-90 backdrop-blur-md">
             <CardHeader>
               <CardTitle className="text-xl font-semibold text-green-700">{title}</CardTitle>
             </CardHeader>
