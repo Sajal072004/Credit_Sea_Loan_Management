@@ -6,6 +6,7 @@ import applicationRoutes from "./routes/applicationRoutes";
 
 import verifierRoutes from "./routes/verifierRoutes";
 import adminRoutes from "./routes/adminRoutes";
+import loanRoutes from "./routes/loanRoutes";
 
 
 
@@ -23,6 +24,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/verifier", verifierRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/loan", loanRoutes);
 
 
 // Root Route
