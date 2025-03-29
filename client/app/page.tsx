@@ -35,7 +35,7 @@ export default function Home() {
         <p className="text-lg max-w-3xl mx-auto mb-6 font-light">
           A modern solution for loan tracking, quick approvals, and secure transactions.
         </p>
-        <Button size="lg" className="bg-white text-green-700 font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform">Get Started</Button>
+        <Button onClick={() => router.push('/login')} size="lg" className="bg-white text-green-700 font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 hover:bg-gray-200 transition-transform">Get Started</Button>
       </header>
 
       {/* Features Section */}
