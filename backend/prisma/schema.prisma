@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  VERIFIER
+  USER
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  phone    String   @unique
+  password String
+  role     UserRole @default(USER)
+  applications Application[]
+  verifiedApplications Application[] @relation("VerifiedBy")
+  approvedApplications Application[] @relation("ApprovedBy")
+}
+
+model Application {
+  id        String  @id @default(uuid())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  status    String  @default("PENDING")
+  tenure    Int
+  amount    Float
+  empStatus String
+  reason    String?
+  empAddress String?
+  dateTime  DateTime @default(now())
+  updatedOn DateTime @updatedAt
+  verifiedBy User? @relation("VerifiedBy", fields: [verifierId], references: [id])
+  verifierId String?
+  approvedBy User? @relation("ApprovedBy", fields: [adminId], references: [id])
+  adminId String?
+  loan     Loan?
+}
+
+model Loan {
+  id             String   @id @default(uuid())
+  application    Application @relation(fields: [applicationId], references: [id])
+  applicationId  String   @unique
+  approvalDate   DateTime @default(now())
+  interestRate   Float
+  principalLeft  Float
+  tenureMonths   Int
+  isPaid         Boolean  @default(false)
+  emi            Float
+  transactions   Transaction[]
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  loan      Loan     @relation(fields: [loanId], references: [id])
+  loanId    String
+  monthYear String
+  date      DateTime @default(now())
+  amount    Float
+}
+
+model Stats {
+  id              String   @id @default(uuid())
+  liveUsers       Int
+  borrowers       Int
+  cashDisbursed   Float
+  savings         Float
+  repaidLoans     Int
+  cashReceived    Float
+  updatedOn       DateTime @updatedAt
+}
