@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter, List, Bell, MessageCircle, User, Home, CreditCard, Wallet } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const loans = [
   { id: 1, officer: "Johnn Okoh", amount: "50,000.00", date: "June 09, 2021", status: "PENDING" },
@@ -23,6 +24,7 @@ const statusColors = {
 
 export default function UserDashboard() {
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -30,7 +32,7 @@ export default function UserDashboard() {
       <nav className="flex justify-between items-center bg-white p-4 shadow">
         <div className="text-lg font-bold text-green-700">CREDIT APP</div>
         <div className="flex space-x-6 text-gray-600">
-          <Home className="cursor-pointer hover:text-green-700" />
+          <Home  className="cursor-pointer hover:text-green-700" />
           <Wallet className="cursor-pointer hover:text-green-700" />
           <CreditCard className="cursor-pointer hover:text-green-700" />
           <Bell className="cursor-pointer hover:text-green-700" />
@@ -52,7 +54,7 @@ export default function UserDashboard() {
               <p className="text-2xl font-semibold">₦0.0</p>
             </div>
           </div>
-          <Button className="bg-green-600 text-white">Get A Loan</Button>
+          <Button onClick={()=>router.push("/dashboard/user/get-loan")} className="bg-green-600 text-white hover:cursor-pointer">Get A Loan</Button>
         </div>
 
         {/* Action Buttons */}
