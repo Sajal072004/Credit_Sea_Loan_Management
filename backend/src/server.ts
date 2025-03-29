@@ -4,6 +4,10 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import applicationRoutes from "./routes/applicationRoutes";
 
+import verifierRoutes from "./routes/verifierRoutes";
+
+
+
 
 dotenv.config();
 
@@ -16,6 +20,8 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/verifier", verifierRoutes);
+
 
 // Root Route
 app.get("/", (req, res) => {
