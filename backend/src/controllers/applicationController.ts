@@ -62,7 +62,7 @@ export const getUserApplications = async (req: AuthRequest, res: Response) => {
 
 export const getUser = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const userId = req.user?.userId; // Extract userId from JWT
+    const userId = req.user?.userId;
 
     if (!userId) {
       res.status(401).json({ message: "Unauthorized: No user ID found" });
@@ -71,7 +71,7 @@ export const getUser = async (req: AuthRequest, res: Response): Promise<void> =>
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true, role: true }, // Exclude sensitive fields
+      select: { id: true, name: true, email: true, role: true },
     });
 
     if (!user) {

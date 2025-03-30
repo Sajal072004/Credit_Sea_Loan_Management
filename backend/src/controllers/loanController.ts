@@ -37,11 +37,11 @@ export const approveAndCreateLoan = async (req: Request, res: Response, next: Ne
     const monthlyRate = annualInterestRate / 12 / 100;
     const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) / (Math.pow(1 + monthlyRate, tenureMonths) - 1);
 
-    // Create Loan Record
+    
     const loan = await prisma.loan.create({
       data: {
         applicationId: appId,
-        userId: application.userId, // Fetch userId from application and pass it to loan
+        userId: application.userId,
         interestRate: annualInterestRate,
         principalLeft: principal,
         tenureMonths,
@@ -196,7 +196,7 @@ export const getUserTotalLoanAmount = async (req: Request, res: Response, next: 
       return;
     }
 
-    // Ensure all principalLeft values are treated as absolute values to avoid negatives
+    
     const totalAmount = loans.reduce((sum, loan) => sum + Math.max(loan.principalLeft,0), 0);
 
     res.status(200).json({ 
@@ -249,7 +249,7 @@ export const getLoanStatistics = async (req: Request, res: Response, next: NextF
     });
     console.log("🔹 Fully repaid loans count:", repaidLoansCount);
 
-    // ✅ Calculate total cash received (savings + disbursed cash)
+   
     const totalCashReceived = totalSavings + totalDisbursedCash;
     console.log("🔹 Total cash received:", totalCashReceived);
 

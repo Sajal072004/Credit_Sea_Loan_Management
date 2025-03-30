@@ -19,16 +19,16 @@ const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction): vo
 
     if (!token) {
       res.status(401).json({ message: "Access Denied. No token provided." });
-      return; // Ensure the function exits here
+      return; 
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; role: string };
-    req.user = decoded; // Attach user to request
+    req.user = decoded; 
 
-    next(); // Call `next()` only if the token is valid
+    next(); 
   } catch (error) {
     res.status(401).json({ message: "Invalid token." });
-    return; // Ensure the function exits here
+    return;
   }
 };
 

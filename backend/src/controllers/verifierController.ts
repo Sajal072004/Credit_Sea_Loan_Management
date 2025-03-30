@@ -89,7 +89,7 @@ export const rejectApplication = async (req: AuthRequest, res: Response): Promis
 
     const updatedApplication = await prisma.application.update({
       where: { id },
-      data: { status: "REJECTED", verifierId: null }, // Remove verifier if rejected
+      data: { status: "REJECTED", verifierId: null },
     });
 
     res.status(200).json({ message: "Application rejected successfully", application: updatedApplication });

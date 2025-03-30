@@ -4,9 +4,7 @@ import { AuthRequest } from "../types/AuthRequest";
 
 const prisma = new PrismaClient();
 
-/**
- * Get all loan applications (Admins & Super Admins can access)
- */
+
 export const getAllApplications = async (req: AuthRequest, res: Response) => {
   try {
     const applications = await prisma.application.findMany({
@@ -20,9 +18,7 @@ export const getAllApplications = async (req: AuthRequest, res: Response) => {
   }
 };
 
-/**
- * Approve or Reject an application (Admins & Super Admins can access)
- */
+
 export const approveApplication = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { id } = req.params;
@@ -64,7 +60,7 @@ export const makeAdmin = async (req: AuthRequest, res: Response): Promise<void> 
   try {
     const { id } = req.params;
 
-    // ✅ Ensure only Super Admin can make Admins
+    
     if (req.user?.role !== UserRole.SUPER_ADMIN) {
       res.status(403).json({ message: "Forbidden: Only Super Admin can make admins" });
       return;
@@ -97,7 +93,7 @@ export const removeAdmin = async (req: AuthRequest, res: Response): Promise<void
   try {
     const { id } = req.params;
 
-    // ✅ Ensure only Super Admin can remove Admins
+    
     if (req.user?.role !== UserRole.SUPER_ADMIN) {
       res.status(403).json({ message: "Forbidden: Only Super Admin can remove admins" });
       return;
@@ -135,7 +131,7 @@ export const getAllUsers = async (req: AuthRequest, res: Response) => {
         email: true,
         role: true,
       },
-      orderBy: { role: "asc" }, // Sort users by role
+      orderBy: { role: "asc" }, 
     });
 
     res.status(200).json({ message: "All users retrieved", users });
@@ -150,7 +146,7 @@ export const makeVerifier = async (req: AuthRequest, res: Response): Promise<voi
   try {
     const { id } = req.params;
 
-    // ✅ Ensure only Super Admin can make Verifiers
+    
     if (req.user?.role !== UserRole.SUPER_ADMIN) {
       res.status(403).json({ message: "Forbidden: Only Super Admin can make verifiers" });
       return;

@@ -33,7 +33,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         email,
         password: hashedPassword,
         phone,
-        role, // "USER" | "ADMIN" | "VERIFIER"
+        role,
       },
     });
 

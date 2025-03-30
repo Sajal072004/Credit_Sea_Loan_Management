@@ -8,8 +8,7 @@ const roleMiddleware = (requiredRole: "SUPER_ADMIN" | "ADMIN" | "VERIFIER" | "US
       return;
     }
 
-    const role: "SUPER_ADMIN" | "ADMIN" | "VERIFIER" | "USER" = req.user.role; // ✅ Explicitly type role
-
+    const role: "SUPER_ADMIN" | "ADMIN" | "VERIFIER" | "USER" = req.user.role;
     // ✅ SUPER_ADMIN can access everything
     if (role === "SUPER_ADMIN") {
       return next();
