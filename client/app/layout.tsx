@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Credit Sea - Sajal Namdeo",
-  description: "Mde by Sajal Namdeo",
+  description: "Made by Sajal Namdeo",
 };
 
 export default function RootLayout({
