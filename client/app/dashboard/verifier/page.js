@@ -37,24 +37,27 @@ export default function VerifierDashboard() {
   }, []);
 
   // Handle Verify & Reject actions
-  const handleStatusUpdate = async (id, newStatus) => {
+  const handleStatusUpdate = async (id, action) => {
     const userToken = localStorage.getItem("userToken");
     if (!userToken) return;
 
+    const url = `http://localhost:5000/api/verifier/${action}/${id}`;
+
     try {
-      const response = await fetch(`http://localhost:5000/api/verifier/${id}`, {
-        method: "PATCH",
+      const response = await fetch(url, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,
         },
-        body: JSON.stringify({ status: newStatus }),
       });
 
       if (response.ok) {
         setApplications((prevApplications) =>
           prevApplications.map((app) =>
-            app.id === id ? { ...app, status: newStatus } : app
+            app.id === id
+              ? { ...app, status: action === "verify" ? "VERIFIED" : "REJECTED" }
+              : app
           )
         );
       } else {
@@ -155,7 +158,7 @@ export default function VerifierDashboard() {
                     className={`px-3 py-1 rounded-full text-white text-sm ${
                       application.status === "PENDING"
                         ? "bg-yellow-400"
-                        : application.status === "APPROVED"
+                        : application.status === "VERIFIED"
                         ? "bg-green-500"
                         : "bg-red-500"
                     }`}
@@ -167,13 +170,13 @@ export default function VerifierDashboard() {
                       <>
                         <button
                           className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
-                          onClick={() => handleStatusUpdate(application.id, "APPROVED")}
+                          onClick={() => handleStatusUpdate(application.id, "verify")}
                         >
                           ✅ Verify
                         </button>
                         <button
                           className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
-                          onClick={() => handleStatusUpdate(application.id, "REJECTED")}
+                          onClick={() => handleStatusUpdate(application.id, "reject")}
                         >
                           ❌ Reject
                         </button>
