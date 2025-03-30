@@ -69,7 +69,7 @@ export default function UserDashboard() {
               <div className="bg-green-500 text-white p-3 rounded-full">💰</div>
               <div>
                 <p className="text-gray-500 text-sm">DEFICIT</p>
-                <p className="text-2xl font-semibold">₦0.0</p>
+                <p className="text-2xl font-semibold">Rs 0.0</p>
               </div>
             </div>
             <Button
@@ -105,7 +105,7 @@ export default function UserDashboard() {
               <h2 className="text-lg font-semibold text-gray-700 mb-4">Applied Loans</h2>
 
               <div className="flex justify-between text-gray-500 text-sm border-b pb-2">
-                <p>Loan Officer</p>
+                <p>Tenure</p>
                 <p>Amount</p>
                 <p>Date Applied</p>
                 <p>Status</p>
@@ -133,19 +133,15 @@ export default function UserDashboard() {
                       className="flex justify-between items-center py-4 border-b"
                     >
                       <div className="flex items-center space-x-3">
-                        <img
-                          src="https://via.placeholder.com/40"
-                          alt="Loan Officer"
-                          className="w-10 h-10 rounded-full"
-                        />
+                        
                         <div>
-                          <p className="font-semibold">Loan Officer</p>
+                          <p className="font-semibold">{loan.tenure} Months</p>
                           <p className="text-xs text-gray-500">
                             Updated {new Date(loan.updatedOn).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
-                      <p className="text-gray-700 font-medium">₦{loan.amount}</p>
+                      <p className="text-gray-700 font-medium">Rs.{loan.amount}</p>
                       <p className="text-gray-600">
                         {new Date(loan.dateTime).toLocaleDateString()}
                       </p>
