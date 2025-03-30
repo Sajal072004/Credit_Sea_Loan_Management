@@ -10,7 +10,7 @@ import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { useRouter } from "next/navigation";
 import UserNavbar from "@/components/ui/UserNavbar.js";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -42,13 +42,12 @@ export default function GetLoan() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
-      toast.error("Please accept the terms and conditions before submitting.")
+      toast.error("Please accept the terms and conditions before submitting.");
       return;
     }
 
     setLoading(true);
 
-    // Prepare request data
     const requestData = {
       amount: parseInt(formData.loanAmount, 10),
       tenure: parseInt(formData.tenure, 10),
@@ -69,27 +68,25 @@ export default function GetLoan() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(requestData),
       });
 
       const result = await response.json();
       if (response.ok) {
-        toast.success("Loan application submitted successfully!")
-        
+        toast.success("Loan application submitted successfully!");
         router.push("/dashboard/user");
       } else {
-        toast.error(result.message || "Something went wrong. Please try again.")
+        toast.error(result.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
-      toast.error("Failed to submit loan application. Please check your connection.")
+      toast.error("Failed to submit loan application. Please check your connection.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Chart Data
   const chartData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
     datasets: [
@@ -105,106 +102,42 @@ export default function GetLoan() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Navbar */}
       <UserNavbar />
 
-      {/* Main Content */}
-      <div className="flex justify-center items-center flex-1 p-6 mt-16">
+      <div className="flex justify-center items-center flex-1 p-4 md:p-6 mt-12">
         <Card className="w-full max-w-3xl shadow-lg bg-white rounded-xl">
-          <CardContent className="p-8">
-            <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Apply for a Loan</h2>
+          <CardContent className="p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800">
+              Apply for a Loan
+            </h2>
 
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <Input
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-                className="border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-              />
-              <Input
-                name="loanAmount"
-                type="number"
-                placeholder="Loan Amount ($)"
-                value={formData.loanAmount}
-                onChange={handleChange}
-                required
-                className="border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-              />
-              <Input
-                name="tenure"
-                type="number"
-                placeholder="Tenure (Months)"
-                value={formData.tenure}
-                onChange={handleChange}
-                required
-                className="border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-              />
-              <Input
-                name="employmentStatus"
-                placeholder="Employment Status"
-                value={formData.employmentStatus}
-                onChange={handleChange}
-                required
-                className="border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-              />
-              <Textarea
-                name="reason"
-                placeholder="Reason for Loan"
-                value={formData.reason}
-                onChange={handleChange}
-                className="col-span-2 border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-                required
-              />
-              <Input
-                name="employmentAddress"
-                placeholder="Employment Address"
-                value={formData.employmentAddress}
-                onChange={handleChange}
-                className="col-span-2 border-gray-300 focus:border-green-500 focus:ring-green-500 transition"
-                required
-              />
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+              <Input name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
+              <Input name="loanAmount" type="number" placeholder="Loan Amount ($)" value={formData.loanAmount} onChange={handleChange} required />
+              <Input name="tenure" type="number" placeholder="Tenure (Months)" value={formData.tenure} onChange={handleChange} required />
+              <Input name="employmentStatus" placeholder="Employment Status" value={formData.employmentStatus} onChange={handleChange} required />
+              <Textarea name="reason" placeholder="Reason for Loan" value={formData.reason} onChange={handleChange} required />
+              <Input name="employmentAddress" placeholder="Employment Address" value={formData.employmentAddress} onChange={handleChange} required />
 
-              {/* Terms & Conditions */}
-              <div className="col-span-2 flex items-start space-x-2 text-sm text-gray-600">
-                <Checkbox
-                  checked={formData.agreeTerms}
-                  onCheckedChange={(checked) => handleCheckboxChange("agreeTerms", checked)}
-                />
-                <label htmlFor="agreeTerms" className="cursor-pointer">
-                  I accept the <span className="text-green-600 underline"> terms and conditions</span>
-                </label>
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <Checkbox checked={formData.agreeTerms} onCheckedChange={(checked) => handleCheckboxChange("agreeTerms", checked)} />
+                <label>I accept the <span className="text-green-600 underline">terms and conditions</span></label>
               </div>
 
-              <div className="col-span-2 flex items-start space-x-2 text-sm text-gray-600">
-                <Checkbox
-                  checked={formData.agreeCreditInfo}
-                  onCheckedChange={(checked) => handleCheckboxChange("agreeCreditInfo", checked)}
-                />
-                <label htmlFor="agreeCreditInfo" className="cursor-pointer">
-                  I consent to my credit information being shared with financial institutions.
-                </label>
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <Checkbox checked={formData.agreeCreditInfo} onCheckedChange={(checked) => handleCheckboxChange("agreeCreditInfo", checked)} />
+                <label>I consent to my credit information being shared with financial institutions.</label>
               </div>
 
-              <Button
-                type="submit"
-                disabled={loading}
-                className="col-span-2 w-full bg-green-600 text-white hover:bg-green-700 text-lg py-2 rounded-lg transition"
-              >
+              <Button type="submit" disabled={loading} className="w-full bg-green-600 text-white hover:bg-green-700 py-2 rounded-lg transition">
                 {loading ? "Submitting..." : "Apply Now"}
               </Button>
             </form>
 
-            {/* Chart Section */}
-            <div className="mt-10">
+            <div className="mt-8">
               <h3 className="text-lg font-semibold text-gray-700 text-center">Loan Trends</h3>
               <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-                <Line
-                  data={chartData}
-                  options={{ responsive: true, maintainAspectRatio: false }}
-                  height={200}
-                />
+                <Line data={chartData} options={{ responsive: true, maintainAspectRatio: false }} height={200} />
               </div>
             </div>
           </CardContent>
