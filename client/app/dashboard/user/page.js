@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import UserNavbar from "@/components/ui/UserNavbar";
+import UserProtectedRoute from "@/components/ui/UserProtectedRoute";
 
 const loans = [
   { id: 1, officer: "Johnn Okoh", amount: "50,000.00", date: "June 09, 2021", status: "PENDING" },
@@ -28,6 +29,7 @@ export default function UserDashboard() {
   const router = useRouter();
 
   return (
+    <UserProtectedRoute>
     <div className="min-h-screen bg-gray-100">
       <UserNavbar />
       {/* Dashboard Content */}
@@ -107,5 +109,6 @@ export default function UserDashboard() {
         </Card>
       </div>
     </div>
+    </UserProtectedRoute>
   );
 }

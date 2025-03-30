@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserFromLocalStorage } from "@/utils/authUtils";
+import {getUserFromLocalStorage} from "@/utils/authUtils.js";
 
 export default function AdminProtectedRoute({ children }) {
   const router = useRouter();

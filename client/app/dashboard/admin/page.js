@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Bell, MessageCircle, User, List, Menu, X, ChevronDown } from "lucide-react";
+import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js"; 
 
 const stats = [
   { label: "ACTIVE USERS", value: "200", icon: "👥" },
@@ -33,6 +34,8 @@ export default function AdminDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
+  
+    <AdminProtectedRoute>
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <aside
@@ -145,5 +148,6 @@ export default function AdminDashboard() {
         </Card>
       </div>
     </div>
+    </AdminProtectedRoute>
   );
 }

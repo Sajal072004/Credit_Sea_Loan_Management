@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Bell, MessageCircle, User, List, Menu, X } from "lucide-react";
+import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
 
 const stats = [
   { label: "LOANS", value: "50", icon: "💰" },
@@ -31,6 +32,7 @@ export default function VerifierDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
+    <VerifierProtectedRoute>
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar - Fixed & Full Height */}
       <aside
@@ -129,5 +131,6 @@ export default function VerifierDashboard() {
         </Card>
       </div>
     </div>
+    </VerifierProtectedRoute>
   );
 }
