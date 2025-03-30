@@ -6,7 +6,7 @@ import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js";
 import Sidebar from "@/components/ui/Sidebar.js";
 import Navbar from "@/components/ui/AdminNavbar.js";
 import StatsCard from "@/components/ui/StatsCard";
-import { List,User,MessageCircle,Home,Bell, } from "lucide-react";
+import { List,User,MessageCircle,Home,Bell, IndianRupee } from "lucide-react";
 
 const statusColors = {
   PENDING: "bg-yellow-500",
@@ -151,12 +151,12 @@ export default function AdminDashboard() {
               label="Total Users"
             />
             <StatsCard
-              icon={MessageCircle}
+              icon={IndianRupee}
               value={stats.totalDisbursedCash}
               label="Total Disbursed Cash"
             />
             <StatsCard
-              icon={Home}
+              icon={IndianRupee}
               value={Math.abs(stats.totalSavings)}
               label="Total Savings"
             />
@@ -166,17 +166,17 @@ export default function AdminDashboard() {
               label="Repaid Loans"
             />
             <StatsCard
-              icon={MessageCircle}
+              icon={IndianRupee}
               value={stats.totalCashReceived}
               label="Total Cash Received"
             />
             <StatsCard
-              icon={Bell}
+              icon={User}
               value={10}
               label="Other Accounts"
             />
             <StatsCard
-              icon={MessageCircle}
+              icon={User}
               value={stats.totalUsers}
               label="Active Users"
             />

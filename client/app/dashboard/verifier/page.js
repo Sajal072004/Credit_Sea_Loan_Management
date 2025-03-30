@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bell, MessageCircle, User, List, Menu, X, Home } from "lucide-react";
+import { Bell, MessageCircle, User, List, Menu, X, Home, IndianRupee } from "lucide-react";
 import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
 import StatsCard from "@/components/ui/StatsCard.js";
 import { useRouter } from "next/navigation";
@@ -187,12 +187,12 @@ export default function VerifierDashboard() {
               label="Total Users"
             />
             <StatsCard
-              icon={MessageCircle}
+              icon={IndianRupee}
               value={stats.totalDisbursedCash}
               label="Total Disbursed Cash"
             />
             <StatsCard
-              icon={Home}
+              icon={IndianRupee}
               value={Math.abs(stats.totalSavings)}
               label="Total Savings"
             />
@@ -202,7 +202,7 @@ export default function VerifierDashboard() {
               label="Repaid Loans"
             />
             <StatsCard
-              icon={MessageCircle}
+              icon={IndianRupee}
               value={stats.totalCashReceived}
               label="Total Cash Received"
             />
