@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bell, MessageCircle, User, Menu, ChevronDown } from "lucide-react";
 import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js";
 import stats from "@/const/adminStats.js";
 import Sidebar from "@/components/ui/Sidebar.js";
+import Navbar from "@/components/ui/AdminNavbar.js";
 
 const statusColors = {
   PENDING: "bg-yellow-500",
@@ -105,26 +105,7 @@ export default function AdminDashboard() {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col h-screen overflow-y-auto p-8">
-          {/* Navbar */}
-          <nav className="flex justify-between items-center bg-white p-4 shadow mb-6">
-            <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
-              <Menu size={24} className="text-green-700" />
-            </button>
-            <div className="text-lg font-bold text-green-700">CREDIT APP</div>
-            <div className="flex space-x-6 text-gray-600 items-center">
-              <Bell className="cursor-pointer hover:text-green-700 relative">
-                <span className="absolute top-0 right-0 text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
-                  4
-                </span>
-              </Bell>
-              <MessageCircle className="cursor-pointer hover:text-green-700" />
-              <div className="flex items-center space-x-1 cursor-pointer">
-                <User className="hover:text-green-700" />
-                <span>Admin</span>
-                <ChevronDown size={16} />
-              </div>
-            </div>
-          </nav>
+          <Navbar setSidebarOpen={setSidebarOpen} />
 
           {/* Dashboard Cards */}
           <h2 className="text-gray-600 font-semibold mb-4">Dashboard</h2>
