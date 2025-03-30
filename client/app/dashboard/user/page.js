@@ -32,12 +32,12 @@ export default function UserDashboard() {
       <nav className="flex justify-between items-center bg-white p-4 shadow">
         <div className="text-lg font-bold text-green-700">CREDIT APP</div>
         <div className="flex space-x-6 text-gray-600">
-          <Home  className="cursor-pointer hover:text-green-700" />
-          <Wallet className="cursor-pointer hover:text-green-700" />
-          <CreditCard className="cursor-pointer hover:text-green-700" />
-          <Bell className="cursor-pointer hover:text-green-700" />
-          <MessageCircle className="cursor-pointer hover:text-green-700" />
-          <User className="cursor-pointer hover:text-green-700" />
+          <Home onClick={()=>router.push("/dashboard/home")}  className="cursor-pointer hover:text-green-700" />
+          <Wallet onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
+          <CreditCard onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
+          <Bell onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
+          <MessageCircle onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
+          <User onClick={()=>router.push("/profile")} className="cursor-pointer hover:text-green-700" />
         </div>
       </nav>
 
