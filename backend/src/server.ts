@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import applicationRoutes from "./routes/applicationRoutes";
+import axios from "axios";
+import cron from "node-cron";
 
 import verifierRoutes from "./routes/verifierRoutes";
 import adminRoutes from "./routes/adminRoutes";
@@ -30,6 +32,15 @@ app.use("/api/loan", loanRoutes);
 // Root Route
 app.get("/", (req, res) => {
   res.send("Hello from Sajal Namdeo , The backend api is running");
+});
+
+cron.schedule("*/15 * * * *", async () => {
+  try {
+    const response = await axios.get("https://credit-sea-loan-management.onrender.com");
+    console.log("Cron job executed: ", response.data);
+  } catch (error) {
+    console.error("Error in cron job request:");
+  }
 });
 
 // Server Listening
