@@ -159,7 +159,7 @@ export default function Login() {
             </CardContent>
           </Card>
 
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md border border-gray-200">
+          <div className="bg-gray-50 px-2 rounded-lg mt-2 shadow-md border border-gray-200">
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
               For Testing
             </h3>
