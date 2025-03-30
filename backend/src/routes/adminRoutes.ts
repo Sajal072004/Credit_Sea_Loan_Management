@@ -5,7 +5,10 @@ import {
   approveApplication,
   makeAdmin,
   removeAdmin,
-  getAllUsers
+  getAllUsers,
+  makeVerifier,
+  removeVerifier,
+  makeUser
 } from "../controllers/adminController";
 import authMiddleware from "../middleware/authMiddleware";
 import roleMiddleware from "../middleware/roleMiddleware";
@@ -19,6 +22,11 @@ router.put("/approve/:id", authMiddleware, roleMiddleware("ADMIN"), asyncHandler
 // ✅ Only Super Admin can promote or demote Admins
 router.put("/make-admin/:id", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(makeAdmin));
 router.put("/remove-admin/:id", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(removeAdmin));
+
+router.put("/make-verifier/:id", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(makeVerifier));
+router.put("/remove-verifier/:id", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(removeVerifier));
+
+router.put("/make-user/:id", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(makeUser));
 
 router.get("/users", authMiddleware, roleMiddleware("SUPER_ADMIN"), asyncHandler(getAllUsers));
 

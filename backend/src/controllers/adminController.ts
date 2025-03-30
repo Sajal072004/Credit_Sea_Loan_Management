@@ -144,3 +144,104 @@ export const getAllUsers = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+export const makeVerifier = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // ✅ Ensure only Super Admin can make Verifiers
+    if (req.user?.role !== UserRole.SUPER_ADMIN) {
+      res.status(403).json({ message: "Forbidden: Only Super Admin can make verifiers" });
+      return;
+    }
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    if (user.role === UserRole.VERIFIER) {
+      res.status(400).json({ message: "User is already a verifier" });
+      return;
+    }
+
+    await prisma.user.update({
+      where: { id },
+      data: { role: UserRole.VERIFIER },
+    });
+
+    res.status(200).json({ message: "User promoted to Verifier" });
+  } catch (error) {
+    console.error("Error making user a verifier:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const removeVerifier = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // ✅ Ensure only Super Admin can remove Verifiers
+    if (req.user?.role !== UserRole.SUPER_ADMIN) {
+      res.status(403).json({ message: "Forbidden: Only Super Admin can remove verifiers" });
+      return;
+    }
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    if (user.role !== UserRole.VERIFIER) {
+      res.status(400).json({ message: "User is not a verifier" });
+      return;
+    }
+
+    await prisma.user.update({
+      where: { id },
+      data: { role: UserRole.USER },
+    });
+
+    res.status(200).json({ message: "Verifier privileges removed" });
+  } catch (error) {
+    console.error("Error removing verifier privileges:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+export const makeUser = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // ✅ Ensure only Super Admin can make a User
+    if (req.user?.role !== UserRole.SUPER_ADMIN) {
+      res.status(403).json({ message: "Forbidden: Only Super Admin can change roles" });
+      return;
+    }
+
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    if (user.role === UserRole.USER) {
+      res.status(400).json({ message: "User is already a normal user" });
+      return;
+    }
+
+    await prisma.user.update({
+      where: { id },
+      data: { role: UserRole.USER },
+    });
+
+    res.status(200).json({ message: "User role set to User" });
+  } catch (error) {
+    console.error("Error making user a normal user:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

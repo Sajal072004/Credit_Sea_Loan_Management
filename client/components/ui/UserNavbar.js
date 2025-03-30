@@ -7,7 +7,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("userToken");
     localStorage.removeItem("userRole");
     router.push("/"); // Redirect to home
   };
@@ -23,7 +23,7 @@ export default function Navbar() {
       <div className="flex space-x-6 text-gray-600 items-center">
         <Home onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
         
-        <User onClick={() => router.push("/profile")} className="cursor-pointer hover:text-green-700" />
+        <User onClick={() => router.push("/dashboard/user/profile")} className="cursor-pointer hover:text-green-700" />
 
         {/* Logout Button */}
         <LogOut

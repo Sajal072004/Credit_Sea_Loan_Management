@@ -39,7 +39,7 @@ export default function Navbar({ setSidebarOpen }) {
               <button
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
-                  router.push("/profile");
+                  router.push("/dashboard/admin/profile");
                   setDropdownOpen(false);
                 }}
               >

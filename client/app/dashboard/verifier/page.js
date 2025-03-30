@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bell, MessageCircle, User, List, Menu, X } from "lucide-react";
+import { Bell, MessageCircle, User, List, Menu, X, Home } from "lucide-react";
 import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
 import StatsCard from "@/components/ui/StatsCard.js";
 import stats from "@/const/stats.js";
@@ -133,9 +133,8 @@ export default function VerifierDashboard() {
             </button>
             <div className="text-lg font-bold text-green-700">CREDIT APP</div>
             <div className="flex space-x-6 text-gray-600">
-              <Bell className="cursor-pointer hover:text-green-700" />
-              <MessageCircle className="cursor-pointer hover:text-green-700" />
-              <User className="cursor-pointer hover:text-green-700" />
+              <Home onClick={()=>router.push("/dashboard/verifier")} className="cursor-pointer hover:text-green-700" />
+              <User onClick={()=>router.push("/dashboard/verifier/profile")} className="cursor-pointer hover:text-green-700" />
             </div>
           </nav>
 
