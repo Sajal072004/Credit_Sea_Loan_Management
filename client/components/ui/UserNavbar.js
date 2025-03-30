@@ -22,10 +22,7 @@ export default function Navbar() {
       </div>
       <div className="flex space-x-6 text-gray-600 items-center">
         <Home onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
-        <Wallet onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
-        <CreditCard onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
-        <Bell onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
-        <MessageCircle onClick={() => router.push("/dashboard/user")} className="cursor-pointer hover:text-green-700" />
+        
         <User onClick={() => router.push("/profile")} className="cursor-pointer hover:text-green-700" />
 
         {/* Logout Button */}
