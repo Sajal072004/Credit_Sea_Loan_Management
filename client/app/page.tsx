@@ -56,7 +56,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-green-700 text-white text-center py-6 shadow-md">
-        <p className="text-lg font-light">© 2025 Credit App. All Rights Reserved.</p>
+        <p className="text-xl font-bold  ">Made By Sajal Namdeo</p>
       </footer>
     </div>
   );

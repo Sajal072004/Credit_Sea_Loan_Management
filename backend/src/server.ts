@@ -29,7 +29,7 @@ app.use("/api/loan", loanRoutes);
 
 // Root Route
 app.get("/", (req, res) => {
-  res.send("Loan Management System API is running...");
+  res.send("Hello from Sajal Namdeo , The backend api is running");
 });
 
 // Server Listening
