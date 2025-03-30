@@ -76,7 +76,7 @@ export default function GetLoan() {
 
       const result = await response.json();
       if (response.ok) {
-        toast.error("Loan application submitted successfully!")
+        toast.success("Loan application submitted successfully!")
         
         router.push("/dashboard/user");
       } else {
