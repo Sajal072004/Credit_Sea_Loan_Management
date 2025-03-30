@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Sidebar from "@/components/ui/Sidebar.js";
 import Navbar from "@/components/ui/AdminNavbar.js";
 import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js";
+import {toast} from 'react-toastify';
 
 export default function ManageUsers() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -68,7 +69,7 @@ export default function ManageUsers() {
       );
     } catch (err) {
       console.error("Error updating role:", err);
-      alert("You need to be a SUPER_ADMIN to perform this action.");
+      toast.error("You need to be a SUPER_ADMIN to perform this action.")
     }
   };
 

@@ -10,6 +10,7 @@ import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { useRouter } from "next/navigation";
 import UserNavbar from "@/components/ui/UserNavbar.js";
+import {toast} from 'react-toastify';
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -41,7 +42,7 @@ export default function GetLoan() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
-      alert("Please accept the terms and conditions before submitting.");
+      toast.error("Please accept the terms and conditions before submitting.")
       return;
     }
 
@@ -59,7 +60,7 @@ export default function GetLoan() {
     try {
       const token = localStorage.getItem("userToken");
       if (!token) {
-        alert("You must be logged in to apply for a loan.");
+        toast.error("You must be logged in to apply for a loan.");
         router.push("/");
         return;
       }
@@ -75,13 +76,14 @@ export default function GetLoan() {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Loan application submitted successfully!");
+        toast.error("Loan application submitted successfully!")
+        
         router.push("/dashboard/user");
       } else {
-        alert(result.message || "Something went wrong. Please try again.");
+        toast.error(result.message || "Something went wrong. Please try again.")
       }
     } catch (error) {
-      alert("Failed to submit loan application. Please check your connection.");
+      toast.error("Failed to submit loan application. Please check your connection.")
     } finally {
       setLoading(false);
     }
