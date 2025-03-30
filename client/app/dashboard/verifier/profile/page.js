@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Home, User, List, Menu, X } from "lucide-react";
 import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 export default function VerifierProfile() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,6 +30,8 @@ export default function VerifierProfile() {
         }
       } catch (error) {
         console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -92,21 +96,35 @@ export default function VerifierProfile() {
             </div>
           </nav>
 
-          {/* Profile Details */}
-          <Card className="shadow-lg bg-white border p-6">
-            <CardContent className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800">Verifier Profile</h2>
-              {userData ? (
-                <>
-                  <p className="text-gray-600">Name: {userData.name}</p>
-                  <p className="text-gray-600">Email: {userData.email}</p>
-                  <p className="text-gray-600">Role: {userData.role}</p>
-                </>
-              ) : (
-                <p className="text-gray-500">Loading profile...</p>
-              )}
-            </CardContent>
-          </Card>
+          <div className="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold text-gray-800">User Profile</h2>
+            {loading ? (
+              <p className="text-center text-gray-500 mt-4">Loading user details...</p>
+            ) : userData ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4 space-y-4"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="bg-blue-500 text-white p-3 rounded-full text-lg font-bold h-16 w-16 flex justify-center items-center">
+                    {userData.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-xl font-semibold">{userData.name}</p>
+                    <p className="text-gray-600">{userData.email}</p>
+                  </div>
+                </div>
+                <div className="bg-gray-100 p-3 rounded-lg">
+                  <p className="text-gray-500">Role:</p>
+                  <p className="text-lg font-medium text-gray-800">{userData.role}</p>
+                </div>
+              </motion.div>
+            ) : (
+              <p className="text-center text-gray-500 mt-4">User not found.</p>
+            )}
+          </div>
         </div>
       </div>
     </VerifierProtectedRoute>

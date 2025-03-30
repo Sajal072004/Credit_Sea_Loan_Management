@@ -9,6 +9,7 @@ import Navbar from "@/components/ui/AdminNavbar.js";
 export default function AdminProfile() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [adminData, setAdminData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAdminProfile = async () => {
@@ -28,6 +29,8 @@ export default function AdminProfile() {
         }
       } catch (error) {
         console.error("Error fetching admin profile:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -43,18 +46,34 @@ export default function AdminProfile() {
 
           <h2 className="text-gray-600 font-semibold mb-4">Admin Profile</h2>
 
-          {adminData ? (
-            <Card className="shadow-lg bg-white border p-6">
-              <CardContent className="space-y-4">
-                <p className="text-xl font-semibold text-gray-800">
-                  {adminData.name}
-                </p>
-                <p className="text-gray-600">Email: {adminData.email}</p>
-                <p className="text-gray-600">Role: {adminData.role}</p>
-              </CardContent>
-            </Card>
-          ) : (
+          {loading ? (
             <p className="text-gray-500">Loading profile...</p>
+          ) : adminData ? (
+            <div className="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+              <h2 className="text-2xl font-bold text-gray-800">User Profile</h2>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4 space-y-4"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="bg-blue-500 text-white p-3 rounded-full text-lg font-bold h-16 w-16 flex justify-center items-center">
+                    {adminData.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-xl font-semibold">{adminData.name}</p>
+                    <p className="text-gray-600">{adminData.email}</p>
+                  </div>
+                </div>
+                <div className="bg-gray-100 p-3 rounded-lg">
+                  <p className="text-gray-500">Role:</p>
+                  <p className="text-lg font-medium text-gray-800">{adminData.role}</p>
+                </div>
+              </motion.div>
+            </div>
+          ) : (
+            <p className="text-center text-gray-500 mt-4">User not found.</p>
           )}
         </div>
       </div>
