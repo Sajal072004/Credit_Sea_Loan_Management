@@ -68,7 +68,7 @@ export default function ManageUsers() {
       );
     } catch (err) {
       console.error("Error updating role:", err);
-      alert("Failed to update role");
+      alert("You need to be a SUPER_ADMIN to perform this action.");
     }
   };
 
