@@ -228,7 +228,7 @@ export const getLoanStatistics = async (req: Request, res: Response, next: NextF
       where: { status: "APPROVED" },
       _sum: { amount: true },
     });
-    const totalDisbursedCash = disbursedCash._sum.amount || 0;
+    const totalDisbursedCash = disbursedCash._sum.amount ?? 0;
     console.log("🔹 Total cash disbursed:", totalDisbursedCash);
 
     // ✅ Calculate savings: (total approved + interest) - approved amount
