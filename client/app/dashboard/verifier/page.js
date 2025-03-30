@@ -7,10 +7,12 @@ import { Bell, MessageCircle, User, List, Menu, X } from "lucide-react";
 import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
 import StatsCard from "@/components/ui/StatsCard.js";
 import stats from "@/const/stats.js";
+import { useRouter } from "next/navigation";
 
 export default function VerifierDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [applications, setApplications] = useState([]);
+  const router = useRouter();
 
   // Fetch applications from API
   useEffect(() => {
@@ -56,7 +58,10 @@ export default function VerifierDashboard() {
         setApplications((prevApplications) =>
           prevApplications.map((app) =>
             app.id === id
-              ? { ...app, status: action === "verify" ? "VERIFIED" : "REJECTED" }
+              ? {
+                  ...app,
+                  status: action === "verify" ? "VERIFIED" : "REJECTED",
+                }
               : app
           )
         );
@@ -90,18 +95,30 @@ export default function VerifierDashboard() {
           </div>
 
           <nav className="space-y-4">
-            {["Dashboard", "Borrowers", "Loans", "Repayments", "Reports", "Settings"].map(
-              (item) => (
-                <div
-                  key={item}
-                  className="flex items-center space-x-3 cursor-pointer hover:bg-green-700 px-3 py-2 rounded-md"
-                >
-                  <List />
-                  <span>{item}</span>
-                </div>
-              )
-            )}
-            <button className="mt-4 w-full flex items-center space-x-3 cursor-pointer hover:bg-red-700 px-3 py-2 rounded-md">
+            {[
+              "Dashboard",
+              "Borrowers",
+              "Loans",
+              "Repayments",
+              "Reports",
+              "Settings",
+            ].map((item) => (
+              <div
+                key={item}
+                className="flex items-center space-x-3 cursor-pointer hover:bg-green-700 px-3 py-2 rounded-md"
+              >
+                <List />
+                <span>{item}</span>
+              </div>
+            ))}
+            <button
+              className="mt-4 w-full flex items-center space-x-3 cursor-pointer hover:bg-red-700 px-3 py-2 rounded-md"
+              onClick={() => {
+                localStorage.removeItem("userToken");
+                localStorage.removeItem("userRole");
+                router.push("/");
+              }}
+            >
               🚪 <span>Sign Out</span>
             </button>
           </nav>
@@ -123,17 +140,26 @@ export default function VerifierDashboard() {
           </nav>
 
           {/* Dashboard Overview */}
-          <h2 className="text-gray-600 font-semibold mb-4">Dashboard &gt; Loans</h2>
+          <h2 className="text-gray-600 font-semibold mb-4">
+            Dashboard &gt; Loans
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {stats.map((stat, index) => (
-              <StatsCard key={index} icon={stat.icon} value={stat.value} label={stat.label} />
+              <StatsCard
+                key={index}
+                icon={stat.icon}
+                value={stat.value}
+                label={stat.label}
+              />
             ))}
           </div>
 
           {/* Loan Applications Table */}
           <Card className="mt-8 shadow-lg">
             <CardContent>
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Loan Applications</h2>
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                Loan Applications
+              </h2>
 
               <div className="grid grid-cols-6 text-gray-500 text-sm border-b pb-2 font-semibold">
                 <p>Name</p>
@@ -170,13 +196,17 @@ export default function VerifierDashboard() {
                       <>
                         <button
                           className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
-                          onClick={() => handleStatusUpdate(application.id, "verify")}
+                          onClick={() =>
+                            handleStatusUpdate(application.id, "verify")
+                          }
                         >
                           ✅ Verify
                         </button>
                         <button
                           className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
-                          onClick={() => handleStatusUpdate(application.id, "reject")}
+                          onClick={() =>
+                            handleStatusUpdate(application.id, "reject")
+                          }
                         >
                           ❌ Reject
                         </button>

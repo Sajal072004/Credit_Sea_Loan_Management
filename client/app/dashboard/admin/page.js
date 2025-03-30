@@ -5,24 +5,13 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Bell, MessageCircle, User, List, Menu, X, ChevronDown } from "lucide-react";
 import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js"; 
+import stats from "@/const/adminStats.js";
 
-const stats = [
-  { label: "ACTIVE USERS", value: "200", icon: "👥" },
-  { label: "BORROWERS", value: "100", icon: "🤝" },
-  { label: "CASH DISBURSED", value: "550,000", icon: "💵" },
-  { label: "CASH RECEIVED", value: "1,000,000", icon: "💲" },
-  { label: "SAVINGS", value: "450,000", icon: "🏦" },
-  { label: "REPAID LOANS", value: "30", icon: "✅" },
-  { label: "OTHER ACCOUNTS", value: "10", icon: "🏛" },
-  { label: "LOANS", value: "50", icon: "💰" },
-];
+
+
 
 const loans = [
   { id: 1, activity: "Contact Email not Linked", customer: "Tom Cruise", date: "June 09, 2021", status: "PENDING" },
-  { id: 2, activity: "Adding Images to Featured Posts", customer: "Matt Damon", date: "June 09, 2021", status: "PENDING" },
-  { id: 3, activity: "When will I be charged this month?", customer: "Robert Downey", date: "June 08, 2021", status: "PENDING" },
-  { id: 4, activity: "Payment not going through", customer: "Christian Bale", date: "June 08, 2021", status: "PENDING" },
-  { id: 5, activity: "Unable to add replies", customer: "Henry Cavil", date: "June 08, 2021", status: "APPROVED" },
 ];
 
 const statusColors = {
