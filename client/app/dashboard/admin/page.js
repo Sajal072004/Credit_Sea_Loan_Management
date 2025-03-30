@@ -244,8 +244,9 @@ export default function AdminDashboard() {
                         </button>
                       )}
 
-                      {/* Show "Reject" button only for PENDING applications */}
-                      {app.status === "PENDING" && (
+                      
+                      {(app.status === "PENDING" ||
+                        app.status === "VERIFIED") && (
                         <button
                           onClick={() =>
                             handleApplicationAction(app.id, "REJECTED")

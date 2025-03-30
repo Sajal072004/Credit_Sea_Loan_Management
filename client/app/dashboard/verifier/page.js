@@ -123,12 +123,12 @@ export default function VerifierDashboard() {
 
           <nav className="space-y-4">
             {[
-              "Dashboard",
-              "Borrowers",
-              "Loans",
-              "Repayments",
-              "Reports",
-              "Settings",
+              "Dashboard(Dummy)",
+              "Borrowers(Dummy)",
+              "Loans(Dummy)",
+              "Repayments(Dummy)",
+              "Reports(Dummy)",
+              "Settings(Dummy)",
             ].map((item) => (
               <div
                 key={item}

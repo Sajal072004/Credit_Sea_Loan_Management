@@ -28,12 +28,12 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
       {/* Sidebar Navigation */}
       <nav className="space-y-3">
         {[
-          "Dashboard",
-          "Borrowers",
-          "Loans",
-          "Repayments",
-          "Loan Parameters",
-          "Accounting",
+          "Dashboard(Dummy)",
+          "Borrowers(Dummy)",
+          "Loans(Dummy)",
+          "Repayments(Dummy)",
+          "Loan (Dummy)",
+          "Accounting(Dummy)",
         ].map((item) => (
           <div
             key={item}
