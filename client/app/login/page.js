@@ -47,6 +47,8 @@ export default function Login() {
       localStorage.setItem("userToken", data.token);
       localStorage.setItem("userRole", data.user.role);
 
+      console.log("the role is ", data.user.role);
+
 
       if (data.user.role === "USER") {
         router.push("/dashboard/user");

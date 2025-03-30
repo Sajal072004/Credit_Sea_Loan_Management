@@ -11,8 +11,8 @@ export default function VerifierProtectedRoute({ children }) {
   useEffect(() => {
     const user = getUserFromLocalStorage();
     if (!user) {
-      router.replace("/"); // Redirect unauthorized users
-    } else if(user.role !== "verifier"){
+      router.replace("/");
+    } else if(user.role !== "VERIFIER"){
       router.replace("/dashboard/user");
     } else {
       setAuthorized(true);
