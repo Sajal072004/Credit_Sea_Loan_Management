@@ -56,7 +56,7 @@ export default function UserDashboard() {
         const token = localStorage.getItem("userToken");
         if (!token) return;
 
-        const response = await fetch("http://localhost:5000/api/loan/get-total", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/loan/get-total`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ export default function AdminProfile() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/applications/get-user", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/applications/get-user`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

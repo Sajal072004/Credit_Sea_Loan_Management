@@ -21,7 +21,7 @@ export default function VerifierDashboard() {
       if (!userToken) return;
 
       try {
-        const response = await fetch("http://localhost:5000/api/verifier", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verifier`, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const data = await response.json();
@@ -43,7 +43,7 @@ export default function VerifierDashboard() {
     const userToken = localStorage.getItem("userToken");
     if (!userToken) return;
 
-    const url = `http://localhost:5000/api/verifier/${action}/${id}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/verifier/${action}/${id}`;
 
     try {
       const response = await fetch(url, {
@@ -77,7 +77,7 @@ export default function VerifierDashboard() {
     const fetchStats = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/loan/get-stats"
+          `${process.env.NEXT_PUBLIC_API_URL}/loan/get-stats`
         );
         const data = await response.json();
         if (response.ok) {

@@ -15,7 +15,7 @@ export default function ManageUsers() {
     const fetchUsers = async () => {
       console.log("Fetching users...");
       try {
-        const response = await fetch("http://localhost:5000/api/admin/users", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -42,11 +42,11 @@ export default function ManageUsers() {
     console.log(`Updating role for user ${userId} to ${newRole}...`);
     let endpoint = "";
     if (newRole === "ADMIN") {
-      endpoint = `http://localhost:5000/api/admin/make-admin/${userId}`;
+      endpoint = `${process.env.NEXT_PUBLIC_API_URL}/admin/make-admin/${userId}`;
     } else if (newRole === "VERIFIER") {
-      endpoint = `http://localhost:5000/api/admin/make-verifier/${userId}`;
+      endpoint = `${process.env.NEXT_PUBLIC_API_URL}/admin/make-verifier/${userId}`;
     } else {
-      endpoint = `http://localhost:5000/api/admin/make-user/${userId}`;
+      endpoint = `${process.env.NEXT_PUBLIC_API_URL}/admin/make-user/${userId}`;
     }
 
     try {

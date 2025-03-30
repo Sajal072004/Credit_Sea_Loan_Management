@@ -26,7 +26,7 @@ export default function AdminDashboard() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/admin", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/loan/get-stats"
+          `${process.env.NEXT_PUBLIC_API_URL}/loan/get-stats`
         );
         const data = await response.json();
         if (response.ok) {
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
     try {
       // First request to update application status
       const res = await fetch(
-        `http://localhost:5000/api/admin/approve/${applicationId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/approve/${applicationId}`,
         {
           method: "PUT",
           headers: {
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
         // If approved, make the second request
         if (status === "APPROVED") {
           const loanRes = await fetch(
-            `http://localhost:5000/api/loan/approve/${applicationId}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/loan/approve/${applicationId}`,
             {
               method: "POST",
               headers: {

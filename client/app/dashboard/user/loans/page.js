@@ -28,7 +28,7 @@ export default function Loans() {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/loan/user", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/loan/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export default function Loans() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/loan/pay/${loanId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/loan/pay/${loanId}`,
         {
           method: "POST",
           headers: {

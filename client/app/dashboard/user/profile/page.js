@@ -27,7 +27,7 @@ export default function UserDashboard() {
         }
 
         const response = await fetch(
-          "http://localhost:5000/api/applications/get-user",
+          `${process.env.NEXT_PUBLIC_API_URL}/applications/get-user`,
           {
             method: "GET",
             headers: {

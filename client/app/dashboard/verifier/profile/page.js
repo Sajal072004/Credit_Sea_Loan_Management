@@ -19,7 +19,7 @@ export default function VerifierProfile() {
       if (!userToken) return;
 
       try {
-        const response = await fetch("http://localhost:5000/api/applications/get-user", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/applications/get-user`, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const data = await response.json();
