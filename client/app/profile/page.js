@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Home, DollarSign, CreditCard, User, Bell } from "lucide-react";
 import { useRouter } from "next/navigation";
+import UserNavbar from "@/components/ui/UserNavbar";
 
 export default function Profile() {
-  const router = useRouter();
+  
 
   // Dummy user data
   const [user, setUser] = useState({
@@ -25,38 +25,7 @@ export default function Profile() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-md flex justify-between items-center px-6 py-4 fixed w-full top-0 z-10">
-        <div
-          onClick={() => router.push("/dashboard/user")}
-          className="text-green-700 font-bold text-xl hover:cursor-pointer"
-        >
-          CREDIT APP
-        </div>
-        <div className="flex space-x-6 text-gray-600 items-center">
-          <Home
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/dashboard/user")}
-          />
-          <DollarSign
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/loans")}
-          />
-          <CreditCard
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/transactions")}
-          />
-          <User
-            className="cursor-pointer text-green-700 transition duration-200"
-            onClick={() => router.push("/profile")}
-          />
-          <div className="relative">
-            <Bell className="cursor-pointer hover:text-green-700 transition duration-200" />
-            <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
-              4
-            </span>
-          </div>
-        </div>
-      </nav>
+      <UserNavbar/>
 
       {/* Profile Section */}
       <div className="flex justify-center items-center flex-1 p-6 mt-16">

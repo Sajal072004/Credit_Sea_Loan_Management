@@ -6,10 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Home, CreditCard, Bell, User, DollarSign } from "lucide-react";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import { useRouter } from "next/navigation";
+import UserNavbar from "@/components/ui/UserNavbar.js";
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -81,45 +81,7 @@ export default function GetLoan() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-md flex justify-between items-center px-6 py-4 fixed w-full top-0 z-10">
-        <div
-          onClick={() => router.push("/dashboard/user")}
-          className="text-green-700 font-bold text-xl hover:cursor-pointer"
-        >
-          CREDIT APP
-        </div>
-        <div className="flex space-x-6 text-gray-600 items-center">
-          {/* Home Icon */}
-          <Home
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/dashboard/user")}
-          />
-
-          {/* DollarSign Icon */}
-          <DollarSign
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/dashboard/user")}
-          />
-
-          {/* CreditCard Icon */}
-          <CreditCard
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/dashboard/user")}
-          />
-
-          {/* User Icon */}
-          <User
-            className="cursor-pointer hover:text-green-700 transition duration-200"
-            onClick={() => router.push("/profile")}
-          />
-          <div className="relative">
-            <Bell className="cursor-pointer hover:text-green-700 transition duration-200" />
-            <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
-              4
-            </span>
-          </div>
-        </div>
-      </nav>
+      <UserNavbar/>
 
       {/* Main Content */}
       <div className="flex justify-center items-center flex-1 p-6 mt-16">

@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Filter, List, Bell, MessageCircle, User, Home, CreditCard, Wallet } from "lucide-react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import UserNavbar from "@/components/ui/UserNavbar";
 
 const loans = [
   { id: 1, officer: "Johnn Okoh", amount: "50,000.00", date: "June 09, 2021", status: "PENDING" },
@@ -28,19 +29,7 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center bg-white p-4 shadow">
-        <div className="text-lg font-bold text-green-700">CREDIT APP</div>
-        <div className="flex space-x-6 text-gray-600">
-          <Home onClick={()=>router.push("/dashboard/home")}  className="cursor-pointer hover:text-green-700" />
-          <Wallet onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
-          <CreditCard onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
-          <Bell onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
-          <MessageCircle onClick={()=>router.push("/dashboard/home")} className="cursor-pointer hover:text-green-700" />
-          <User onClick={()=>router.push("/profile")} className="cursor-pointer hover:text-green-700" />
-        </div>
-      </nav>
-
+      <UserNavbar />
       {/* Dashboard Content */}
       <div className="max-w-5xl mx-auto mt-8">
         {/* Deficit Section */}
