@@ -59,13 +59,16 @@ export default function Loans() {
         return;
       }
 
-      const response = await fetch(`http://localhost:5000/api/loan/pay/${loanId}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/loan/pay/${loanId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to process EMI payment");
@@ -103,8 +106,9 @@ export default function Loans() {
                   {/* Loan Summary */}
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold text-gray-800">
-                      Loan Amount Left: ₹{loan.principalLeft}
+                      Loan Amount Left: ₹{Math.max(0, loan.principalLeft)}
                     </h3>
+
                     <span className="text-sm text-gray-600">
                       {loan.tenureMonths} Months | {loan.interestRate}% Interest
                     </span>
@@ -113,24 +117,32 @@ export default function Loans() {
                   {/* Current EMI */}
                   <div className="mb-4">
                     <p className="text-gray-700">
-                      <strong>Current EMI:</strong> ₹{loan.emi.toFixed(2)}
+                      <strong>EMI:</strong> ₹{loan.emi.toFixed(2)}
                     </p>
                   </div>
 
                   {/* Previous EMIs */}
                   <div className="mb-4">
-                    <p className="text-gray-700 font-semibold">Previous EMIs:</p>
+                    <p className="text-gray-700 font-semibold">
+                      Previous EMIs:
+                    </p>
                     {loan.transactions.length > 0 ? (
                       loan.transactions.map((txn, index) => (
                         <div
                           key={index}
                           className="flex justify-between text-gray-600 text-sm border-b py-1"
                         >
-                          <span>{txn.date ? new Date(txn.date).toLocaleDateString() : "Unknown"}</span>
+                          <span>
+                            {txn.date
+                              ? new Date(txn.date).toLocaleDateString()
+                              : "Unknown"}
+                          </span>
                           <span>₹{txn.amount}</span>
                           <span
                             className={
-                              txn.status === "Paid" ? "text-green-600" : "text-red-600"
+                              txn.status === "Paid"
+                                ? "text-green-600"
+                                : "text-red-600"
                             }
                           >
                             {txn.status}
@@ -149,7 +161,9 @@ export default function Loans() {
                       onClick={() => handlePayEmi(loan.id)}
                       disabled={payingEmi === loan.id}
                     >
-                      {payingEmi === loan.id ? "Processing..." : `Pay EMI ₹${loan.emi.toFixed(2)}`}
+                      {payingEmi === loan.id
+                        ? "Processing..."
+                        : `Pay EMI ₹${loan.emi.toFixed(2)}`}
                     </Button>
                   )}
                 </CardContent>
