@@ -16,38 +16,38 @@ export default function Loans() {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchLoans = async () => {
-      try {
-        const token = localStorage.getItem("userToken");
-        if (!token) {
-          console.error("No token found, redirecting to login...");
-          router.push("/login");
-          return;
-        }
-
-        const response = await fetch("http://localhost:5000/api/loan/user", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch loans");
-        }
-
-        const data = await response.json();
-        setLoans(data.loans);
-      } catch (error) {
-        console.error("Error fetching loans:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchLoans();
   }, []);
+
+  const fetchLoans = async () => {
+    try {
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        console.error("No token found, redirecting to login...");
+        router.push("/login");
+        return;
+      }
+
+      const response = await fetch("http://localhost:5000/api/loan/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch loans");
+      }
+
+      const data = await response.json();
+      setLoans(data.loans);
+    } catch (error) {
+      console.error("Error fetching loans:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePayEmi = async (loanId) => {
     setPayingEmi(loanId);
@@ -71,15 +71,10 @@ export default function Loans() {
         throw new Error("Failed to process EMI payment");
       }
 
-      const data = await response.json();
-      toast.success(`✅ EMI Paid Successfully: ₹${data.amount}`);
+      toast.success("✅ EMI Paid Successfully");
 
-      // Update the UI after payment
-      setLoans((prevLoans) =>
-        prevLoans.map((loan) =>
-          loan.id === loanId ? { ...loan, isPaid: true } : loan
-        )
-      );
+      // Fetch updated loan details after EMI payment
+      fetchLoans();
     } catch (error) {
       console.error("Error processing EMI payment:", error);
       toast.error("❌ EMI payment failed. Please try again.");
@@ -147,8 +142,8 @@ export default function Loans() {
                     )}
                   </div>
 
-                  {/* Pay EMI Button */}
-                  {!loan.isPaid && (
+                  {/* Pay EMI Button (Appears again after EMI is paid) */}
+                  {loan.principalLeft > 0 && (
                     <Button
                       className="bg-green-600 hover:bg-green-700 text-white w-full"
                       onClick={() => handlePayEmi(loan.id)}
