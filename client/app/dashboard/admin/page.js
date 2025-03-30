@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js";
-import stats from "@/const/adminStats.js";
 import Sidebar from "@/components/ui/Sidebar.js";
 import Navbar from "@/components/ui/AdminNavbar.js";
+import StatsCard from "@/components/ui/StatsCard";
+import { List,User,MessageCircle,Home,Bell, } from "lucide-react";
 
 const statusColors = {
   PENDING: "bg-yellow-500",
@@ -41,6 +42,35 @@ export default function AdminDashboard() {
     };
 
     fetchApplications();
+  }, []);
+
+  const [stats, setStats] = useState({});
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/loan/get-stats"
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setStats({
+            totalLoans: data.totalLoans,
+            totalUsers: data.totalUsers,
+            totalDisbursedCash: data.totalDisbursedCash,
+            totalSavings: data.totalSavings,
+            repaidLoansCount: data.repaidLoansCount,
+            totalCashReceived: data.totalCashReceived,
+          });
+        } else {
+          console.error("Error fetching stats:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching loan stats:", error);
+      }
+    };
+
+    fetchStats();
   }, []);
 
   // Handle Approve & Reject Actions
@@ -109,18 +139,47 @@ export default function AdminDashboard() {
 
           {/* Dashboard Cards */}
           <h2 className="text-gray-600 font-semibold mb-4">Dashboard</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <Card key={index} className="shadow-md bg-white border">
-                <CardContent className="flex justify-between items-center p-4">
-                  <div className="text-3xl">{stat.icon}</div>
-                  <div>
-                    <p className="text-xl font-bold">{stat.value}</p>
-                    <p className="text-gray-500 text-sm">{stat.label}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <StatsCard
+              icon={List}
+              value={stats.totalLoans}
+              label="Total Loans"
+            />
+            <StatsCard
+              icon={User}
+              value={stats.totalUsers}
+              label="Total Users"
+            />
+            <StatsCard
+              icon={MessageCircle}
+              value={stats.totalDisbursedCash}
+              label="Total Disbursed Cash"
+            />
+            <StatsCard
+              icon={Home}
+              value={Math.abs(stats.totalSavings)}
+              label="Total Savings"
+            />
+            <StatsCard
+              icon={Bell}
+              value={stats.repaidLoansCount}
+              label="Repaid Loans"
+            />
+            <StatsCard
+              icon={MessageCircle}
+              value={stats.totalCashReceived}
+              label="Total Cash Received"
+            />
+            <StatsCard
+              icon={Bell}
+              value={10}
+              label="Other Accounts"
+            />
+            <StatsCard
+              icon={MessageCircle}
+              value={stats.totalUsers}
+              label="Active Users"
+            />
           </div>
 
           {/* Recent Loans Table */}
