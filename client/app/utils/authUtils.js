@@ -1,6 +1,6 @@
 export function getUserFromLocalStorage() {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("userToken");
     const role = localStorage.getItem("userRole");
     
     if (!token || !role) return null;

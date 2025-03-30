@@ -44,8 +44,8 @@ export default function Login() {
       toast.success("Login successful!");
 
       // Store token and role in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userRole", data.user.role);
 
 
       if (data.user.role === "USER") {

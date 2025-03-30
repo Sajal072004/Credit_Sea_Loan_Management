@@ -48,8 +48,8 @@ export default function Signup() {
       toast.success("User registered successfully!");
 
       // Store token in localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("userRole", data.user.role);
 
       // Redirect to respective dashboard
       if (data.user.role === "USER") {
