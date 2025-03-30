@@ -208,3 +208,63 @@ export const getUserTotalLoanAmount = async (req: Request, res: Response, next: 
     next(error);
   }
 };
+
+
+
+export const getLoanStatistics = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    console.log("🔹 getLoanStatistics API called");
+
+    // ✅ Fetch total loan count
+    const totalLoans = await prisma.loan.count();
+    console.log("🔹 Total loans count:", totalLoans);
+
+    // ✅ Fetch total users count
+    const totalUsers = await prisma.user.count();
+    console.log("🔹 Total users count:", totalUsers);
+
+    // ✅ Fetch total cash disbursed (sum of all approved loan amounts)
+    const disbursedCash = await prisma.application.aggregate({
+      where: { status: "APPROVED" },
+      _sum: { amount: true },
+    });
+    const totalDisbursedCash = disbursedCash._sum.amount || 0;
+    console.log("🔹 Total cash disbursed:", totalDisbursedCash);
+
+    // ✅ Calculate savings: (total approved + interest) - approved amount
+    const approvedLoans = await prisma.loan.findMany({
+      select: { principalLeft: true, interestRate: true, tenureMonths: true },
+    });
+
+    let totalSavings = 0;
+    approvedLoans.forEach((loan) => {
+      const interest = (loan.principalLeft * loan.interestRate * loan.tenureMonths) / 100;
+      totalSavings += interest;
+    });
+    console.log("🔹 Total savings:", totalSavings);
+
+    // ✅ Fetch count of fully repaid loans (where principalLeft is 0 or less)
+    const repaidLoansCount = await prisma.loan.count({
+      where: { principalLeft: { lte: 0 } },
+    });
+    console.log("🔹 Fully repaid loans count:", repaidLoansCount);
+
+    // ✅ Calculate total cash received (savings + disbursed cash)
+    const totalCashReceived = totalSavings + totalDisbursedCash;
+    console.log("🔹 Total cash received:", totalCashReceived);
+
+    res.status(200).json({
+      message: "Loan statistics retrieved successfully",
+      totalLoans,
+      totalUsers,
+      totalDisbursedCash,
+      totalSavings,
+      repaidLoansCount,
+      totalCashReceived,
+    });
+  } catch (error) {
+    console.error("❌ Error fetching loan statistics:", error);
+    next(error);
+  }
+};
+

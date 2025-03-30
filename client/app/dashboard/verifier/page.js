@@ -6,12 +6,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Bell, MessageCircle, User, List, Menu, X, Home } from "lucide-react";
 import VerifierProtectedRoute from "@/components/ui/VerifierProtectedRoute.js";
 import StatsCard from "@/components/ui/StatsCard.js";
-import stats from "@/const/stats.js";
 import { useRouter } from "next/navigation";
 
 export default function VerifierDashboard() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [applications, setApplications] = useState([]);
+  const [stats, setStats] = useState({});
   const router = useRouter();
 
   // Fetch applications from API
@@ -73,6 +73,33 @@ export default function VerifierDashboard() {
     }
   };
 
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/loan/get-stats"
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setStats({
+            totalLoans: data.totalLoans,
+            totalUsers: data.totalUsers,
+            totalDisbursedCash: data.totalDisbursedCash,
+            totalSavings: data.totalSavings,
+            repaidLoansCount: data.repaidLoansCount,
+            totalCashReceived: data.totalCashReceived,
+          });
+        } else {
+          console.error("Error fetching stats:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching loan stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <VerifierProtectedRoute>
       <div className="flex h-screen bg-gray-100">
@@ -133,8 +160,14 @@ export default function VerifierDashboard() {
             </button>
             <div className="text-lg font-bold text-green-700">CREDIT APP</div>
             <div className="flex space-x-6 text-gray-600">
-              <Home onClick={()=>router.push("/dashboard/verifier")} className="cursor-pointer hover:text-green-700" />
-              <User onClick={()=>router.push("/dashboard/verifier/profile")} className="cursor-pointer hover:text-green-700" />
+              <Home
+                onClick={() => router.push("/dashboard/verifier")}
+                className="cursor-pointer hover:text-green-700"
+              />
+              <User
+                onClick={() => router.push("/dashboard/verifier/profile")}
+                className="cursor-pointer hover:text-green-700"
+              />
             </div>
           </nav>
 
@@ -143,14 +176,36 @@ export default function VerifierDashboard() {
             Dashboard &gt; Loans
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {stats.map((stat, index) => (
-              <StatsCard
-                key={index}
-                icon={stat.icon}
-                value={stat.value}
-                label={stat.label}
-              />
-            ))}
+            <StatsCard
+              icon={List}
+              value={stats.totalLoans}
+              label="Total Loans"
+            />
+            <StatsCard
+              icon={User}
+              value={stats.totalUsers}
+              label="Total Users"
+            />
+            <StatsCard
+              icon={MessageCircle}
+              value={stats.totalDisbursedCash}
+              label="Total Disbursed Cash"
+            />
+            <StatsCard
+              icon={Home}
+              value={Math.abs(stats.totalSavings)}
+              label="Total Savings"
+            />
+            <StatsCard
+              icon={Bell}
+              value={stats.repaidLoansCount}
+              label="Repaid Loans"
+            />
+            <StatsCard
+              icon={MessageCircle}
+              value={stats.totalCashReceived}
+              label="Total Cash Received"
+            />
           </div>
 
           {/* Loan Applications Table */}
