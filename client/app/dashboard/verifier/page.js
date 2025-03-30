@@ -161,7 +161,8 @@ export default function VerifierDashboard() {
                 Loan Applications
               </h2>
 
-              <div className="grid grid-cols-6 text-gray-500 text-sm border-b pb-2 font-semibold">
+              {/* Table Header */}
+              <div className="grid grid-cols-5 text-gray-500 text-sm font-semibold border-b pb-2 text-center">
                 <p>Name</p>
                 <p>Amount</p>
                 <p>Tenure</p>
@@ -169,52 +170,61 @@ export default function VerifierDashboard() {
                 <p>Action</p>
               </div>
 
-              {applications.map((application) => (
-                <motion.div
-                  key={application.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="grid grid-cols-6 items-center py-4 border-b"
-                >
-                  <p className="font-medium">{application.user.name}</p>
-                  <p className="text-gray-700">₹{application.amount}</p>
-                  <p className="text-gray-700">{application.tenure} months</p>
-                  <span
-                    className={`px-3 py-1 rounded-full text-white text-sm ${
-                      application.status === "PENDING"
-                        ? "bg-yellow-400"
-                        : application.status === "VERIFIED"
-                        ? "bg-green-500"
-                        : "bg-red-500"
-                    }`}
+              {/* Applications List */}
+              {applications.length > 0 ? (
+                applications.map((application) => (
+                  <motion.div
+                    key={application.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-5 items-center py-4 border-b text-center"
                   >
-                    {application.status}
-                  </span>
-                  <div className="flex space-x-2">
-                    {application.status === "PENDING" && (
-                      <>
-                        <button
-                          className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
-                          onClick={() =>
-                            handleStatusUpdate(application.id, "verify")
-                          }
-                        >
-                          ✅ Verify
-                        </button>
-                        <button
-                          className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
-                          onClick={() =>
-                            handleStatusUpdate(application.id, "reject")
-                          }
-                        >
-                          ❌ Reject
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
+                    <p className="font-medium truncate">
+                      {application.user.name}
+                    </p>
+                    <p className="text-gray-700">₹{application.amount}</p>
+                    <p className="text-gray-700">{application.tenure} months</p>
+                    <span
+                      className={`px-3 py-1 rounded-full text-white text-sm ${
+                        application.status === "PENDING"
+                          ? "bg-yellow-400"
+                          : application.status === "REJECTED"
+                          ? "bg-red-500"
+                          : "bg-green-500"
+                      }`}
+                    >
+                      {application.status}
+                    </span>
+                    <div className="flex justify-center space-x-2">
+                      {application.status === "PENDING" && (
+                        <>
+                          <button
+                            className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700"
+                            onClick={() =>
+                              handleStatusUpdate(application.id, "verify")
+                            }
+                          >
+                            ✅ Verify
+                          </button>
+                          <button
+                            className="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
+                            onClick={() =>
+                              handleStatusUpdate(application.id, "reject")
+                            }
+                          >
+                            ❌ Reject
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <p className="text-gray-500 text-center py-4">
+                  No applications found.
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>

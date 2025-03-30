@@ -12,7 +12,7 @@ export default function AdminProtectedRoute({ children }) {
     const user = getUserFromLocalStorage();
     if (!user) {
       router.replace("/");
-    } else if ( user.role !== "ADMIN" || user.role !== "SUPER_ADMIN") {
+    } else if ( user.role !== "ADMIN" && user.role !== "SUPER_ADMIN") {
       router.replace("/dashboard/user");}
      else {
       setAuthorized(true);
