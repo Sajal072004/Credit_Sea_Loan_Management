@@ -26,13 +26,16 @@ export default function UserDashboard() {
           return;
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/applications`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/applications`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch applications");
@@ -80,11 +83,14 @@ export default function UserDashboard() {
             </Button>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex justify-between mt-6">
-            <Button className="flex-1 mx-2 bg-gray-600 hover:bg-gray-900">Borrow Cash</Button>
-            <Button className="flex-1 mx-2 bg-gray-600 hover:bg-gray-900">Transact</Button>
-            <Button className="flex-1 mx-2 bg-gray-600 hover:bg-gray-900">Deposit Cash</Button>
+          {/* Action Button */}
+          <div className="flex justify-center mt-6">
+            <Button
+              className="bg-red-600 hover:bg-red-400 px-6 py-2"
+              onClick={() => router.push("/dashboard/user/loans")}
+            >
+              Your Current Loans
+            </Button>
           </div>
 
           {/* Search Bar */}
@@ -102,7 +108,9 @@ export default function UserDashboard() {
           {/* Applied Loans Table */}
           <Card className="mt-8 shadow-lg">
             <CardContent>
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Applied Loans</h2>
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                Applied Loans
+              </h2>
 
               <div className="flex justify-between text-gray-500 text-sm border-b pb-2">
                 <p>Tenure</p>
@@ -113,11 +121,19 @@ export default function UserDashboard() {
 
               {(() => {
                 if (loading) {
-                  return <p className="text-center text-gray-500 mt-4">Loading applications...</p>;
+                  return (
+                    <p className="text-center text-gray-500 mt-4">
+                      Loading applications...
+                    </p>
+                  );
                 }
 
                 if (applications.length === 0) {
-                  return <p className="text-center text-gray-500 mt-4">No loan applications found.</p>;
+                  return (
+                    <p className="text-center text-gray-500 mt-4">
+                      No loan applications found.
+                    </p>
+                  );
                 }
 
                 return applications
@@ -133,20 +149,24 @@ export default function UserDashboard() {
                       className="flex justify-between items-center py-4 border-b"
                     >
                       <div className="flex items-center space-x-3">
-                        
                         <div>
                           <p className="font-semibold">{loan.tenure} Months</p>
                           <p className="text-xs text-gray-500">
-                            Updated {new Date(loan.updatedOn).toLocaleDateString()}
+                            Updated{" "}
+                            {new Date(loan.updatedOn).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
-                      <p className="text-gray-700 font-medium">Rs.{loan.amount}</p>
+                      <p className="text-gray-700 font-medium">
+                        Rs.{loan.amount}
+                      </p>
                       <p className="text-gray-600">
                         {new Date(loan.dateTime).toLocaleDateString()}
                       </p>
                       <span
-                        className={`px-3 py-1 rounded-full text-white text-sm ${statusColors[loan.status]}`}
+                        className={`px-3 py-1 rounded-full text-white text-sm ${
+                          statusColors[loan.status]
+                        }`}
                       >
                         {loan.status}
                       </span>
