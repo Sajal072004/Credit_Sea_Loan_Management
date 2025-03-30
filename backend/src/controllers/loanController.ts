@@ -165,3 +165,46 @@ export const getUserLoans = async (req: Request, res: Response, next: NextFuncti
     next(error);
   }
 };
+
+
+export const getUserTotalLoanAmount = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    console.log("🔹 getUserTotalLoanAmount API called");
+
+    const authReq = req as AuthRequest;
+    const userId = authReq.user?.userId;
+
+    console.log("🔹 Extracted userId:", userId);
+
+    if (!userId) {
+      console.log("❌ Unauthorized request: User ID missing");
+      res.status(401).json({ message: "Unauthorized: User ID missing" });
+      return;
+    }
+
+    // ✅ Fetch all loans and ensure all values are non-negative
+    const loans = await prisma.loan.findMany({
+      where: { userId },
+      select: { principalLeft: true },
+    });
+
+    console.log("🔹 Loans fetched successfully:", loans);
+
+    if (loans.length === 0) {
+      console.log("❌ No loans found for this user");
+      res.status(404).json({ message: "No loans found for this user" });
+      return;
+    }
+
+    // Ensure all principalLeft values are treated as absolute values to avoid negatives
+    const totalAmount = loans.reduce((sum, loan) => sum + Math.max(loan.principalLeft,0), 0);
+
+    res.status(200).json({ 
+      message: "Total loan amount calculated successfully", 
+      totalAmount 
+    });
+  } catch (error) {
+    console.error("❌ Error calculating total loan amount:", error);
+    next(error);
+  }
+};

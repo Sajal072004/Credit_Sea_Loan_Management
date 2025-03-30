@@ -14,6 +14,7 @@ export default function UserDashboard() {
   const [search, setSearch] = useState("");
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalLoanAmount, setTotalLoanAmount] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,7 +51,32 @@ export default function UserDashboard() {
       }
     };
 
+    const fetchTotalLoanAmount = async () => {
+      try {
+        const token = localStorage.getItem("userToken");
+        if (!token) return;
+
+        const response = await fetch("http://localhost:5000/api/loan/get-total", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch total loan amount");
+        }
+
+        const data = await response.json();
+        setTotalLoanAmount(data.totalAmount);
+      } catch (error) {
+        console.error("Error fetching total loan amount:", error);
+      }
+    };
+
     fetchApplications();
+    fetchTotalLoanAmount();
   }, []);
 
   const statusColors = {
@@ -66,13 +92,13 @@ export default function UserDashboard() {
         <UserNavbar />
         {/* Dashboard Content */}
         <div className="max-w-5xl mx-auto mt-8">
-          {/* Deficit Section */}
+          {/* Loan Amount Section */}
           <div className="flex justify-between items-center bg-green-100 p-4 rounded-lg shadow-md">
             <div className="flex items-center space-x-4">
               <div className="bg-green-500 text-white p-3 rounded-full">💰</div>
               <div>
-                <p className="text-gray-500 text-sm">DEFICIT</p>
-                <p className="text-2xl font-semibold">Rs 0.0</p>
+                <p className="text-gray-500 text-sm">Total Loan Amount</p>
+                <p className="text-2xl font-semibold">Rs {totalLoanAmount.toFixed(2)}</p>
               </div>
             </div>
             <Button
@@ -152,8 +178,7 @@ export default function UserDashboard() {
                         <div>
                           <p className="font-semibold">{loan.tenure} Months</p>
                           <p className="text-xs text-gray-500">
-                            Updated{" "}
-                            {new Date(loan.updatedOn).toLocaleDateString()}
+                            Updated {new Date(loan.updatedOn).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
