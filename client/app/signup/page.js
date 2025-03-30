@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/ui/Header";
 
-
 export default function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -32,11 +31,14 @@ export default function Signup() {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Signup failed");
@@ -86,7 +88,11 @@ export default function Signup() {
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name Input */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.4 }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                >
                   <Input
                     placeholder="Name"
                     name="name"
@@ -98,7 +104,11 @@ export default function Signup() {
                 </motion.div>
 
                 {/* Email Input */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.4 }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                >
                   <Input
                     type="email"
                     placeholder="Email"
@@ -111,7 +121,11 @@ export default function Signup() {
                 </motion.div>
 
                 {/* Password Input */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.4 }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                >
                   <Input
                     type="password"
                     placeholder="Password"
@@ -124,7 +138,11 @@ export default function Signup() {
                 </motion.div>
 
                 {/* Phone Input */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.4 }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                >
                   <Input
                     type="tel"
                     placeholder="Phone"
@@ -138,14 +156,25 @@ export default function Signup() {
 
                 {/* Error Message */}
                 {error && (
-                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-sm">
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-500 text-sm"
+                  >
                     {error}
                   </motion.p>
                 )}
 
                 {/* Signup Button */}
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button type="submit" className="w-full bg-green-700 text-white hover:bg-green-600 transition-all" disabled={loading}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    type="submit"
+                    className="w-full bg-green-700 text-white hover:bg-green-600 transition-all"
+                    disabled={loading}
+                  >
                     {loading ? "Signing Up..." : "Sign Up"}
                   </Button>
                 </motion.div>
@@ -154,12 +183,43 @@ export default function Signup() {
               {/* Login Redirect */}
               <p className="text-center text-sm text-gray-600 mt-4">
                 Already have an account?{" "}
-                <motion.span className="text-green-700 cursor-pointer hover:underline" whileHover={{ scale: 1.1 }} onClick={() => router.push("/login")}>
+                <motion.span
+                  className="text-green-700 cursor-pointer hover:underline"
+                  whileHover={{ scale: 1.1 }}
+                  onClick={() => router.push("/login")}
+                >
                   Login
                 </motion.span>
               </p>
             </CardContent>
           </Card>
+          <div className="bg-gray-50 p-4 rounded-lg shadow-md border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              For Testing
+            </h3>
+            <div className="text-gray-700 space-y-2">
+              <div>
+                <span className="font-medium text-green-600">
+                  SuperAdmin Email:
+                </span>{" "}
+                sajalsuperadmin@gmail.com
+              </div>
+              <div>
+                <span className="font-medium text-blue-600">Admin Email:</span>{" "}
+                sajaladmin@gmail.com
+              </div>
+              <div>
+                <span className="font-medium text-purple-600">
+                  Verifier Email:
+                </span>{" "}
+                sajalverifier@gmail.com
+              </div>
+              <div>
+                <span className="font-medium text-red-600">Password:</span>{" "}
+                sajal
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>
