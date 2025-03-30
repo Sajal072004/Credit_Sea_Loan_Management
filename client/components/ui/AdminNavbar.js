@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Bell, MessageCircle, User, Menu, ChevronDown } from "lucide-react";
+import {  User, Menu, ChevronDown, Home } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Navbar({ setSidebarOpen }) {
@@ -14,12 +14,13 @@ export default function Navbar({ setSidebarOpen }) {
       </button>
       <div className="text-lg font-bold text-green-700">CREDIT APP</div>
       <div className="flex space-x-6 text-gray-600 items-center relative">
-        <Bell className="cursor-pointer hover:text-green-700 relative">
-          <span className="absolute top-0 right-0 text-xs bg-red-600 text-white px-1.5 py-0.5 rounded-full">
-            4
-          </span>
-        </Bell>
-        <MessageCircle className="cursor-pointer hover:text-green-700" />
+        {/* Home Button */}
+        <Home
+          className="cursor-pointer hover:text-green-700"
+          size={24}
+          onClick={() => router.push("/dashboard/admin")}
+        />
+        
         
         {/* User Dropdown */}
         <div className="relative">
@@ -47,7 +48,7 @@ export default function Navbar({ setSidebarOpen }) {
               <button
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => {
-                  router.push("/manage-users");
+                  router.push("/dashboard/admin/manage-users");
                   setDropdownOpen(false);
                 }}
               >
