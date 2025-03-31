@@ -34,7 +34,8 @@ app.get("/", (req, res) => {
   res.send("Hello from Sajal Namdeo , The backend api is running");
 });
 
-cron.schedule("*/15 * * * *", async () => {
+//so that server dont cold start on render
+cron.schedule("*/13 * * * *", async () => {
   try {
     const response = await axios.get("https://credit-sea-loan-management.onrender.com");
     console.log("Cron job executed: ", response.data);
