@@ -6,6 +6,8 @@ import Navbar from "@/components/ui/AdminNavbar.js";
 import AdminProtectedRoute from "@/components/ui/AdminProtectedRoute.js";
 import {toast} from 'react-toastify';
 
+
+
 export default function ManageUsers() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [users, setUsers] = useState([]);

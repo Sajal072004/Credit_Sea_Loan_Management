@@ -30,9 +30,8 @@ Minimize the **error** between actual and predicted values using a **loss functi
 Common loss function:
 - **Mean Squared Error (MSE)**:  
 
-$$
-\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-$$
+$MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$
+
 
 Where:
 - $y_i$ = actual value  
@@ -376,6 +375,7 @@ Naïve Bayes is a **probabilistic supervised** learning algorithm based on **Bay
 $$
 P(C|X) = \frac{P(X|C)P(C)}{P(X)}
 $$
+
 
 Since $P(X)$ is constant across classes, we compare:  
 $$
